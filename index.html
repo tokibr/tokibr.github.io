@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>穗穗的小猫天空 · 世界不能没有小猫</title>
+<style>
+  :root{
+    --sky-1:#bfe0ff;
+    --sky-2:#e7f4ff;
+    --cream:#fff7ef;
+    --pink:#ffc9d9;
+    --pink-deep:#ff9ab5;
+    --brown:#7a5a43;
+    --brown-light:#a68a6e;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,sans-serif;
+    color:var(--brown);
+    background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 55%,var(--cream) 100%);
+    min-height:100vh;
+    overflow-x:hidden;
+  }
+
+  /* ===== 漂浮云朵 ===== */
+  .cloud{
+    position:fixed;z-index:0;opacity:.55;pointer-events:none;
+    animation:float 14s ease-in-out infinite alternate;
+  }
+  .cloud::before,.cloud::after{
+    content:"";position:absolute;background:#ffffff;border-radius:50%;
+  }
+  .cloud::before{width:70%;height:70%;left:5%;bottom:40%;}
+  .cloud::after{width:50%;height:50%;left:-12%;bottom:0;}
+  .c1{width:150px;height:60px;top:8%;left:6%;}
+  .c2{width:110px;height:45px;top:18%;right:10%;animation-delay:2s;}
+  .c3{width:90px;height:38px;top:60%;left:14%;animation-delay:4s;opacity:.35;}
+  .c4{width:130px;height:52px;top:45%;right:5%;animation-delay:6s;}
+  @keyframes float{
+    from{transform:translateX(0);}
+    to{transform:translateX(40px);}
+  }
+
+  .wrap{position:relative;z-index:1;max-width:1080px;margin:0 auto;padding:0 20px;}
+
+  /* ===== 顶部导航 ===== */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.55);
+    backdrop-filter:blur(10px);
+    border-bottom:1px dashed rgba(122,90,67,.18);
+  }
+  .nav-inner{max-width:1080px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{font-weight:800;font-size:20px;letter-spacing:1px;display:flex;align-items:center;gap:8px;}
+  .logo .paw{width:26px;height:26px;}
+  .nav-links{display:flex;gap:22px;}
+  .nav-links a{
+    text-decoration:none;color:var(--brown);font-weight:600;font-size:15px;
+    padding:4px 12px;border-radius:20px;transition:.25s;
+  }
+  .nav-links a:hover{background:var(--pink);}
+
+  /* ===== Hero ===== */
+  .hero{text-align:center;padding:76px 0 40px;}
+  .avatar-wrap{
+    width:150px;height:150px;margin:0 auto 22px;position:relative;
+    animation:bob 3.4s ease-in-out infinite;
+  }
+  .avatar-wrap img{width:100%;height:100%;border-radius:50%;object-fit:cover;border:6px solid #fff;box-shadow:0 12px 30px rgba(122,90,67,.25);}
+  .avatar-wrap .spark{position:absolute;font-size:26px;top:-16px;right:-12px;animation:spin 6s linear infinite;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+  @keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+  .hero h1{font-size:44px;font-weight:900;letter-spacing:2px;}
+  .hero .badge{
+    display:inline-block;margin-top:14px;padding:7px 18px;border-radius:30px;
+    background:var(--pink);font-size:15px;font-weight:700;
+  }
+  .hero .sub{margin-top:14px;font-size:16px;color:var(--brown-light);}
+  .sky-title{font-size:28px;font-weight:900;margin-top:34px;color:var(--pink-deep);}
+  .sky-title small{display:block;font-size:15px;font-weight:600;color:var(--brown-light);margin-top:6px;}
+
+  /* ===== 区块通用 ===== */
+  section{padding:44px 0;}
+  .sec-title{text-align:center;font-size:30px;font-weight:900;letter-spacing:1px;margin-bottom:8px;}
+  .sec-sub{text-align:center;color:var(--brown-light);font-size:15px;margin-bottom:28px;}
+
+  /* ===== 关于 ===== */
+  .about-card{
+    background:#fff;border-radius:28px;padding:34px 30px;
+    box-shadow:0 10px 30px rgba(122,90,67,.12);text-align:center;max-width:720px;margin:0 auto;
+  }
+  .about-card p{font-size:16px;line-height:2;color:var(--brown);}
+  .about-card .big{
+    font-size:22px;font-weight:800;color:var(--pink-deep);
+    background:linear-gradient(90deg,var(--pink-deep),#ff7fa5);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  }
+  .paw-row{margin-top:16px;display:flex;gap:16px;justify-content:center;}
+
+  /* ===== 猫咪画廊 ===== */
+  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;}
+  .card{
+    position:relative;border-radius:24px;overflow:hidden;cursor:pointer;
+    box-shadow:0 8px 24px rgba(122,90,67,.14);aspect-ratio:4/5;background:#fff;
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .card:hover{transform:translateY(-6px) rotate(-1deg);box-shadow:0 16px 34px rgba(122,90,67,.22);}
+  .card img{width:100%;height:100%;object-fit:cover;display:block;}
+  .card .cap{
+    position:absolute;left:0;right:0;bottom:0;padding:26px 16px 14px;
+    background:linear-gradient(transparent,rgba(0,0,0,.45));
+    color:#fff;font-size:14px;font-weight:600;text-align:center;opacity:0;transition:opacity .3s;
+  }
+  .card:hover .cap{opacity:1;}
+  .card .heart{position:absolute;top:12px;right:14px;font-size:20px;opacity:.9;}
+
+  /* ===== 页脚 ===== */
+  footer{
+    text-align:center;padding:40px 20px 50px;
+    color:var(--brown-light);font-size:14px;
+  }
+  footer .tagline{font-size:22px;font-weight:900;color:var(--pink-deep);margin-bottom:10px;}
+  footer .credit{margin-top:14px;font-size:13px;opacity:.8;}
+
+  /* ===== Lightbox ===== */
+  .lightbox{
+    position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.7);
+    display:none;align-items:center;justify-content:center;padding:30px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:92%;max-height:90%;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.5);}
+  .lightbox .close{
+    position:absolute;top:24px;right:28px;color:#fff;font-size:40px;cursor:pointer;line-height:1;
+  }
+  .lightbox .close:hover{color:var(--pink);}
+
+  @media(max-width:600px){
+    .hero h1{font-size:32px;}
+    .glass{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- 漂浮云朵 -->
+  <div class="cloud c1"></div>
+  <div class="cloud c2"></div>
+  <div class="cloud c3"></div>
+  <div class="cloud c4"></div>
+
+  <!-- 导航 -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="logo"><svg class="paw" viewBox="0 0 24 24" fill="currentColor"><g fill="#ff9ab5"><circle cx="6" cy="9" r="2.4"/><circle cx="11" cy="6.6" r="2.4"/><circle cx="16" cy="9" r="2.4"/><ellipse cx="11" cy="14" rx="5" ry="4.2"/></g></svg>穗穗的猫咖天空</div>
+      <nav class="nav-links">
+        <a href="#about">关于</a>
+        <a href="#gallery">猫猫照片</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="avatar-wrap">
+        <img src="img/cat-1.jpg" alt="穗穗的猫咪" />
+        <span class="spark">✨</span>
+      </div>
+      <h1>穗穗的小猫天空</h1>
+      <div class="badge">🐾 世界不能没有小猫!!!</div>
+      <div class="sub">一个住着猫咪、装着天空的治愈小窝</div>
+      <div class="sky-title">我喜欢天空 ˶ᵔ ᵕ ᵔ˶<small>云朵、晚霞、软软的猫爪，都值得被温柔收藏</small></div>
+    </section>
+
+    <!-- 关于 -->
+    <section id="about">
+      <div class="sec-title">关于这里</div>
+      <div class="sec-sub">一份送给世界的温柔</div>
+      <div class="about-card">
+        <p>
+          这里住着一只叫 <span class="big">穗穗</span> 的小可爱，
+          她最最喜欢天空，天空蓝蓝的、软软的、亮亮的，怎么看都很好看～
+        </p>
+        <p style="margin-top:10px;">
+          而她收集了一整个世界的毛茸茸，把它们悄悄藏进这里，
+          想告诉每个人 —— <span class="big">世界不能没有小猫!!!</span> ₊⁺♡̶₊⁺
+        </p>
+        <div class="paw-row">
+          <svg width="34" height="34" viewBox="0 0 24 24"><g fill="#ffc9d9"><circle cx="6" cy="9" r="2.4"/><circle cx="11" cy="6.6" r="2.4"/><circle cx="16" cy="9" r="2.4"/><ellipse cx="11" cy="14" rx="5" ry="4.2"/></g></svg>
+          <svg width="34" height="34" viewBox="0 0 24 24"><g fill="#ffc9d9"><circle cx="6" cy="9" r="2.4"/><circle cx="11" cy="6.6" r="2.4"/><circle cx="16" cy="9" r="2.4"/><ellipse cx="11" cy="14" rx="5" ry="4.2"/></g></svg>
+          <svg width="34" height="34" viewBox="0 0 24 24"><g fill="#ffc9d9"><circle cx="6" cy="9" r="2.4"/><circle cx="11" cy="6.6" r="2.4"/><circle cx="16" cy="9" r="2.4"/><ellipse cx="11" cy="14" rx="5" ry="4.2"/></g></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- 画廊 -->
+    <section id="gallery">
+      <div class="sec-title">毛茸茸图鉴</div>
+      <div class="sec-sub">每一只都是天空送来的礼物 💛</div>
+      <div class="gallery" id="galleryGrid"></div>
+    </section>
+  </div>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="tagline">₊⁺♡̶₊⁺ 世界不能没有小猫!!! ₊⁺♡̶₊⁺</div>
+    <div>祝穗穗每天都能抬头看见漂亮的天空 ☁️</div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span class="close" id="closeBox">×</span>
+    <img id="lightboxImg" src="" alt="猫咪" />
+  </div>
+
+<script>
+  const imgs = [
+    "img/cat-1.jpg","img/cat-2.jpg","img/cat-3.jpg","img/cat-4.jpg",
+    "img/cat-5.jpg","img/cat-6.jpg","img/cat-7.jpg","img/cat-8.jpg"
+  ];
+  const caps = ["梦一个云朵觉","盯——","小小守护神","团成一个小太阳","贴贴时刻","世界第一软","安睡的小天使","谁也不许抢!!"];
+  const grid = document.getElementById("galleryGrid");
+  imgs.forEach((src,i)=>{
+    const card = document.createElement("div");
+    card.className = "card";
+    card.innerHTML = `<img src="${src}" alt="猫咪${i+1}" loading="lazy"/><span class="heart">🐾</span><div class="cap">${caps[i]}</div>`;
+    card.addEventListener("click",()=>{
+      document.getElementById("lightboxImg").src = src;
+      document.getElementById("lightbox").classList.add("open");
+    });
+    grid.appendChild(card);
+  });
+
+  const lb = document.getElementById("lightbox");
+  document.getElementById("closeBox").addEventListener("click",()=>lb.classList.remove("open"));
+  lb.addEventListener("click",e=>{ if(e.target===lb) lb.classList.remove("open"); });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape") lb.classList.remove("open"); });
+</script>
+</body>
+</html>
